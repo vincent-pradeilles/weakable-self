@@ -22,59 +22,59 @@ public extension Weakable {
         }
     }
     
-    public func weakify<A>(_ code: @escaping (A, Self) -> Void) -> (A) -> Void {
+    public func weakify<A>(_ code: @escaping (Self, A) -> Void) -> (A) -> Void {
         return { [weak self] a in
             guard let self = self else { return }
             
-            code(a, self)
+            code(self, a)
         }
     }
     
-    public func weakify<A, B>(_ code: @escaping (A, B, Self) -> Void) -> (A, B) -> Void {
+    public func weakify<A, B>(_ code: @escaping (Self, A, B) -> Void) -> (A, B) -> Void {
         return { [weak self] a, b in
             guard let self = self else { return }
             
-            code(a, b, self)
+            code(self, a, b)
         }
     }
     
-    public func weakify<A, B, C>(_ code: @escaping (A, B, C, Self) -> Void) -> (A, B, C) -> Void {
+    public func weakify<A, B, C>(_ code: @escaping (Self, A, B, C) -> Void) -> (A, B, C) -> Void {
         return { [weak self] a, b, c in
             guard let self = self else { return }
             
-            code(a, b, c, self)
+            code(self, a, b, c)
         }
     }
     
-    public func weakify<A, B, C, D>(_ code: @escaping (A, B, C, D, Self) -> Void) -> (A, B, C, D) -> Void {
+    public func weakify<A, B, C, D>(_ code: @escaping (Self, A, B, C, D) -> Void) -> (A, B, C, D) -> Void {
         return { [weak self] a, b, c, d in
             guard let self = self else { return }
             
-            code(a, b, c, d, self)
+            code(self, a, b, c, d)
         }
     }
     
-    public func weakify<A, B, C, D, E>(_ code: @escaping (A, B, C, D, E, Self) -> Void) -> (A, B, C, D, E) -> Void {
+    public func weakify<A, B, C, D, E>(_ code: @escaping (Self, A, B, C, D, E) -> Void) -> (A, B, C, D, E) -> Void {
         return { [weak self] a, b, c, d, e in
             guard let self = self else { return }
             
-            code(a, b, c, d, e, self)
+            code(self, a, b, c, d, e)
         }
     }
     
-    public func weakify<A, B, C, D, E, F>(_ code: @escaping (A, B, C, D, E, F, Self) -> Void) -> (A, B, C, D, E, F) -> Void {
+    public func weakify<A, B, C, D, E, F>(_ code: @escaping (Self, A, B, C, D, E, F) -> Void) -> (A, B, C, D, E, F) -> Void {
         return { [weak self] a, b, c, d, e, f in
             guard let self = self else { return }
             
-            code(a, b, c, d, e, f, self)
+            code(self, a, b, c, d, e, f)
         }
     }
     
-    public func weakify<A, B, C, D, E, F, G>(_ code: @escaping (A, B, C, D, E, F, G, Self) -> Void) -> (A, B, C, D, E, F, G) -> Void {
+    public func weakify<A, B, C, D, E, F, G>(_ code: @escaping (Self, A, B, C, D, E, F, G) -> Void) -> (A, B, C, D, E, F, G) -> Void {
         return { [weak self] a, b, c, d, e, f, g in
             guard let self = self else { return }
             
-            code(a, b, c, d, e, f, g, self)
+            code(self, a, b, c, d, e, f, g)
         }
     }
 }

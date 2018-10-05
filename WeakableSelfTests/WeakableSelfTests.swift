@@ -75,7 +75,13 @@ private class Consumer: NSObject {
     }
     
     let producer = Producer()
-    
+
+    func consumeWithoutWeakify() {
+        producer.registerZeroArg(handler: {
+            self.handleZeroArg()
+        })
+    }
+
     func consumeZeroArg() {
         producer.registerZeroArg(handler: weakify { strongSelf in
             strongSelf.handleZeroArg()
@@ -83,43 +89,43 @@ private class Consumer: NSObject {
     }
     
     func consumeOneArg() {
-        producer.registerOneArg(handler: weakify { a, strongSelf in
+        producer.registerOneArg(handler: weakify { strongSelf, a in
             strongSelf.handleOneArg(a)
         })
     }
     
     func consumeTwoArgs() {
-        producer.registerTwoArgs(handler: weakify { a, b, strongSelf in
+        producer.registerTwoArgs(handler: weakify { strongSelf, a, b in
             strongSelf.handleTwoArgs(a,b)
         })
     }
     
     func consumeThreeArgs() {
-        producer.registerThreeArgs(handler: weakify { a, b, c, strongSelf in
+        producer.registerThreeArgs(handler: weakify { strongSelf, a, b, c in
             strongSelf.handleThreeArgs(a,b,c)
         })
     }
     
     func consumeFourArgs() {
-        producer.registerFourArgs(handler: weakify { a, b, c, d, strongSelf in
+        producer.registerFourArgs(handler: weakify { strongSelf, a, b, c, d in
             strongSelf.handleFourArgs(a,b,c,d)
         })
     }
     
     func consumeFiveArgs() {
-        producer.registerFiveArgs(handler: weakify { a, b, c, d, e, strongSelf in
+        producer.registerFiveArgs(handler: weakify { strongSelf, a, b, c, d, e in
             strongSelf.handleFiveArgs(a,b,c,d,e)
         })
     }
     
     func consumeSixArgs() {
-        producer.registerSixArgs(handler: weakify { a, b, c, d, e, f, strongSelf in
+        producer.registerSixArgs(handler: weakify { strongSelf, a, b, c, d, e, f in
             strongSelf.handleSixArgs(a,b,c,d,e,f)
         })
     }
     
     func consumeSevenArgs() {
-        producer.registerSevenArgs(handler: weakify { a, b, c, d, e, f, g, strongSelf in
+        producer.registerSevenArgs(handler: weakify { strongSelf, a, b, c, d, e, f, g in
             strongSelf.handleSevenArgs(a,b,c,d,e,f,g)
         })
     }
@@ -164,6 +170,20 @@ class SharedTests: XCTestCase {
         
         producerWasDeinit = false
         consumerWasDeinit = false
+    }
+
+    /// This test proves that without the use of weakify a memory leak is indeed created.
+    func testWithoutWeakifying() {
+        var consumer: Consumer? = Consumer()
+        consumer?.consumeWithoutWeakify()
+
+        XCTAssertFalse(producerWasDeinit, "producerWasDeinit")
+        XCTAssertFalse(consumerWasDeinit, "consumerWasDeinit")
+
+        consumer = nil
+
+        XCTAssertFalse(producerWasDeinit, "producerWasDeinit")
+        XCTAssertFalse(consumerWasDeinit, "consumerWasDeinit")
     }
     
     func testWeakifyZeroArgument() {

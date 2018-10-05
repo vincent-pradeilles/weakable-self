@@ -29,7 +29,7 @@ Using this `weakify` function, the code above will be transformed into the much 
 ```swift
 import WeakableSelf
 
-service.call(completion: weakify { result, strongSelf in    
+service.call(completion: weakify { strongSelf, result in    
     // use weak non-optional `strongSelf` to handle `result`
 })
 ```
