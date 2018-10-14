@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'WeakableSelf'
   s.version          = '1.1.0'
-  s.summary          = 'KeyPathKit leverages Swift 4 KeyPath type in order to implement a SQL-like data manipulation API'
+  s.summary          = 'A Swift micro-framework to easily deal with weak references to self inside closures'
 
   s.description      = <<-DESC
 Closures are one of Swift must-have features, and Swift developers are aware of how tricky they can be when they capture the reference of an external object, especially when this object is self.
@@ -10,7 +10,7 @@ To deal with this issue, developers are required to write additional code, using
 
 service.call(completion: { [weak self] result in
     guard let self = self else { return }
-    
+
     // use weak non-optional `self` to handle `result`
 })
 
@@ -20,7 +20,7 @@ Using this weakify function, the code above will be transformed into the much mo
 
 import WeakableSelf
 
-service.call(completion: weakify { result, strongSelf in    
+service.call(completion: weakify { result, strongSelf in
     // use weak non-optional `strongSelf` to handle `result`
 })
 
