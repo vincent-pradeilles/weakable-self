@@ -6,14 +6,20 @@ let package = Package(
     products: [
         .library(
             name: "WeakableSelf",
-            targets: ["WeakableSelf"])
+            targets: ["WeakableSelf"]
+        )
     ],
-    dependencies: [
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "WeakableSelf",
             dependencies: [],
-            path: "Sources")
+            path: "Sources"
+        ),
+        .testTarget(
+            name: "WeakableSelfTests",
+            dependencies: ["WeakableSelf"],
+            path: "WeakableSelfTests"
+        )
     ]
 )
